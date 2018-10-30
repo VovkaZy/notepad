@@ -1,16 +1,25 @@
 class Post
 
+
+  # static class method
+  def self.post_types
+    [Memo, Link, Task]
+  end
+
+  # static child ancestors creator
+  def self.create(type_index)
+    return post_types[type_index].new
+  end
+
   def initialize
     @created_at = Time.now
     @text = nil
   end
 
   def read_from_console
-# to do
   end
 
   def to_strings
-# to do
   end
 
   def save_in_file
@@ -23,11 +32,10 @@ class Post
   end
 
   def file_path
-    current_path = File.dirname(__FILE__ )
+    current_path = File.dirname(__FILE__)
 
-    file_name = @created_at.strftime("#{self.class.name}_%Y-%m-$d_%H-%M-%S.txt")
+    file_name = @created_at.strftime("#{self.class.name}" + "/" + "#{self.class.name}_%Y-%m-%d_%H-%M-%S.txt")
 
-    current_path + '/' + file_name
+    current_path + "/" + file_name
   end
-
 end
