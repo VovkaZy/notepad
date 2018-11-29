@@ -20,10 +20,10 @@ Created by v.n.zubarev@gmail.com on 23/10/18
 
 3). Set up your API keys for twitter [How To Link](https://bit.ly/2K6tLOD) : 
   ```  
-     config.consumer_key = 'your_key'
-     config.consumer_secret = 'your_secret'
-     config.access_token = 'your_token'
-     config.access_token_secret = 'your_token_secret'
+  config.consumer_key = 'your_key'
+  config.consumer_secret = 'your_secret'    
+  config.access_token = 'your_token'
+  config.access_token_secret = 'your_token_secret'
   ```  
      
 4). If you want to read info from DB, just run in terminal (command line): `ruby read_db.rb`
