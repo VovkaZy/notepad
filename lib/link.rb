@@ -1,7 +1,9 @@
-# Class for working with links using in Notepad console app
+# Class Link for working with links using in Notepad console app
 # Get user input, add time stamp and load data to db
-# ver.: 1.0
+# ver.: 0.9
 # Created by v.n.zubarev@gmail.com on 02/11/18
+
+require_relative 'post'
 
 class Link < Post
   Post.post_types[self.name] = self
@@ -11,8 +13,9 @@ class Link < Post
     @url = ''
   end
 
+  # Ask user for input, save it to the instance variables
   def read_from_console
-    puts 'Enter URL, plese:'
+    puts 'Enter URL, please:'
     @url = STDIN.gets.chomp
 
     puts 'Enter the name to this link, please:'
@@ -20,7 +23,7 @@ class Link < Post
   end
 
   def to_strings
-    time_string = "Created at: #{@created_at.strftime('%Y.%m.%d, %H:%M:%S')}\n\r"
+    time_string = "Created at: #{@created_at.strftime('%Y.%m.%d, %H:%M:%S')}"
     [@url, @text, time_string]
   end
 

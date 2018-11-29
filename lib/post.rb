@@ -1,4 +1,4 @@
-# Class  for working with tasks using in Notepad console app
+# Class Post for working with tasks using in Notepad console app
 # Get user input, add time stamp for creating and deadline, load data to db
 # ver.: 1.0
 # Created by v.n.zubarev@gmail.com on 02/11/18
@@ -29,27 +29,30 @@ class Post
 
     db.close
 
+    post = create(result['type'])
+    post.load_data(result)
+    post
+
+  end
+=begin
     if result.empty?
-      puts "Такой id = #{id} не найден в базе :("
-      return nil
+      puts "This id = #{id} can't be found in database, sorry"
     else
       post = create(result['type'])
-
       post.load_data(result)
-
       post
     end
   end
-
+=end
   def self.find_all(type, limit)
     db = SQLite3::Database.open(@@SQLITE_DB_FILE)
     db.results_as_hash = false
 
-    query = 'SELECT rowid, * FROM posts'
+    query = 'SELECT rowid, * FROM posts '
 
-    query += 'WHERE type = :type' unless type.nil?
-    query += 'ORDER by rowid DESC'
-    query += 'LIMIT :limit' unless limit.nil?
+    query += 'WHERE type = :type ' unless type.nil?
+    query += 'ORDER by rowid DESC '
+    query += 'LIMIT :limit ' unless limit.nil?
 
     statement = db.prepare(query)
 
@@ -82,11 +85,12 @@ class Post
 
   def to_strings; end
 
-  def save_in_file
+  def save
     file = File.new(file_path, 'w:UTF-8')
 
     # for item in to_strings
-    to_strings.each { |item| file.puts(item) }
+    #to_strings.each { |item| file.puts(item) }
+    file.puts to_strings.join("\n")
     file.close
   end
 
@@ -101,24 +105,28 @@ class Post
   def save_to_db
     db = SQLite3::Database.open(@@SQLITE_DB_FILE)
     db.results_as_hash = true
+
     db.execute(
-       'INSERT INTO posts (' +
-       to_db_hash.keys.join(',') +
-       ')' +
-       'VALUES (' +
-       ('?,' * to_db_hash.keys.size).chomp(',') +
-       ')',
+        "INSERT INTO posts (" +
+            to_db_hash.keys.join(',') +
+            ")" +
+            " VALUES (" +
+            ('?,'*to_db_hash.keys.size).chomp(',') +
+            ")",
         to_db_hash.values
-      )
+    )
+
     insert_row_id = db.last_insert_row_id
+
     db.close
+
     insert_row_id
   end
 
   def to_db_hash
     {
-      'type' => self.class.name,
-      'created_at' => @created_at.to_s
+        'type' => self.class.name,
+        'created_at' => @created_at.to_s
     }
   end
 

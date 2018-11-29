@@ -1,8 +1,9 @@
-# Class for working with tasks using in Notepad console app
-# Get user input, add time stamp for creating and deadline, load data to db
-# ver.: 1.0
+# Class Task for working with tasks. Used in Notepad console app
+# Get user input, add time stamp for creating and deadline date, load data to db
+# ver.: 0.9
 # Created by v.n.zubarev@gmail.com on 02/11/18
 
+require_relative 'post'
 require 'date'
 
 class Task < Post
@@ -13,6 +14,7 @@ class Task < Post
     @due_date = Time.now
   end
 
+  # Ask user for input, save it to the variables
   def read_from_console
     puts 'What to do:'
     @text = STDIN.gets.chomp
@@ -24,7 +26,7 @@ class Task < Post
   end
 
   def to_strings
-    time_string = "Created at: #{@created_at.strftime('%Y.%m.%d, %H:%M:%S')}\n\r"
+    time_string = "Created at: #{@created_at.strftime('%Y.%m.%d, %H:%M:%S')}"
     deadline = "Expire date: #{@due_date}"
     [deadline, @text, time_string]
   end
@@ -37,7 +39,8 @@ class Task < Post
   end
 
   def load_data(data_hash)
-    super(data_hash) # first we use parent method for common fields initialization
+    # first we use parent method for common fields initialization
+    super(data_hash)
     @due_date = Date.parse(data_hash['due_date'])
     @text = data_hash['text']
   end

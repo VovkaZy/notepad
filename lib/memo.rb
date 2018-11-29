@@ -3,9 +3,12 @@
 # ver.: 1.0
 # Created by v.n.zubarev@gmail.com on 02/11/18
 
+require_relative 'post'
+
 class Memo < Post
   Post.post_types[self.name] = self
 
+  # Ask user for input, save it to array till the word 'close'
   def read_from_console
     puts 'New memo (I will save all text till \'close\' word :'
     @text = []
@@ -19,7 +22,7 @@ class Memo < Post
   end
 
   def to_strings
-    time_string = "Created at: #{@created_at.strftime('%Y.%m.%d, %H:%M:%S')}\n\r"
+    time_string = "Created at: #{@created_at.strftime('%Y.%m.%d, %H:%M:%S')}\n\n"
     @text.unshift(time_string)
   end
 
@@ -30,7 +33,8 @@ class Memo < Post
   end
 
   def load_data(data_hash)
-    super(data_hash) # first we use parent method for common fields initialization
+    # first we use parent method for common fields initialization
+    super(data_hash)
     @text = data_hash['text'].split('\n\r')
   end
 end
