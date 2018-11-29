@@ -29,7 +29,7 @@ Created by v.n.zubarev@gmail.com on 23/10/18
 4). If you want to read info from DB, just run in terminal (command line): `ruby read_db.rb`
 > You can also see the options for reading DB
 
-Run `ruby read_db.rb -h` and you'll see this:
+Run `ruby read_db.rb -h` and you'll see options:
 ```
 Usage: read_db.db [options]
     -h, --help                       Prints this help
